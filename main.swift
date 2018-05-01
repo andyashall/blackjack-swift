@@ -1,5 +1,10 @@
 import Foundation
 
+
+typealias Card = (suit: String, value: String)
+typealias Deck = [Card]
+typealias Game = (Deck, Deck, Deck)
+
 var suit: [String] = ["2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace"]
 var deck: [String] = suit + suit + suit + suit
 
@@ -44,8 +49,8 @@ func playDealer(deck: [String], d: [String], p: [String]) -> (String], [String],
 
 func game(deck: [String], d: [String], p: [String]) -> () {
 
-  let player = sum(arr: np)
-  let dealer = sum(arr: nd)
+  let player = sum(arr: p)
+  let dealer = sum(arr: d)
 
   if player > 21 {
     print("Your Bust boi!")
@@ -62,16 +67,9 @@ func game(deck: [String], d: [String], p: [String]) -> () {
 
   let action = readLine()
   if action == "hit" || action == "Hit" {
-    var nd
-    var np
-    if dealer < 17 {
-      nd = d + [deck[0]]
-      np = p + [deck[1]]
-    } else {
-      nd = d
-      np = p + [deck[0]]
-    }
-    game(deck: Array(deck.suffix(deck.endIndex-2)), d: nd, p: np)
+    let ndeck = Array(deck.suffix(deck.endIndex-1))
+    let np = p + [deck[0]]
+    game(playDealer(deck: ndeck, d: d, p: np))
   } else if action == "stick" || action == "Stick" || action == "stay" || action == "Stay" {
     if dealer < 17 {
       
